@@ -87,8 +87,6 @@ if (BUILD_STATIC)
     add_library(rttr_core_lib STATIC ${UnityBuild} ${SRC_FILES} ${HPP_FILES})
     add_library(RTTR::Core ALIAS rttr_core_lib)
 
-    
-
     set_target_properties(rttr_core_lib PROPERTIES
                           VERSION ${RTTR_VERSION} SOVERSION ${RTTR_VERSION}
                           EXPORT_NAME Core_Lib
@@ -129,7 +127,7 @@ endif()
 
 if (BUILD_WITH_STATIC_RUNTIME_LIBS)
     add_library(rttr_core_s SHARED ${UnityBuild} ${SRC_FILES} ${HPP_FILES})
-    add_library(RTTR::Core_STL ALIAS rttr_core_s)
+    add_library(RTTR::Core ALIAS rttr_core_s)
     
     target_compile_definitions(rttr_core_s PRIVATE RTTR_DLL_EXPORTS)
     target_compile_definitions(rttr_core_s PUBLIC RTTR_DLL)
@@ -176,7 +174,7 @@ if (BUILD_WITH_STATIC_RUNTIME_LIBS)
     
     if (BUILD_STATIC)
         add_library(rttr_core_lib_s STATIC ${UnityBuild} ${SRC_FILES} ${HPP_FILES})
-        add_library(RTTR::Core_Lib_STL ALIAS rttr_core_lib_s)
+        add_library(RTTR::Core ALIAS rttr_core_lib_s)
         
         
 
