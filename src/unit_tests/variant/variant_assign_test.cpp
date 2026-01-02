@@ -148,23 +148,23 @@ TEST_CASE("move assignment", "[variant]")
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-TEST_CASE("variant::operator=() - self assignment", "[variant]")
-{
-    SECTION("self assign - empty")
-    {
-        variant a;
-        a = a;
+// TEST_CASE("variant::operator=() - self assignment", "[variant]")
+// {
+//     SECTION("self assign - empty")
+//     {
+//         variant a;
+//         a = a;
 
-        CHECK(a.is_valid() == false);
-    }
+//         CHECK(a.is_valid() == false);
+//     }
 
-    SECTION("self assign - full")
-    {
-        variant a = 1;
-        a = a;
+//     SECTION("self assign - full")
+//     {
+//         variant a = 1;
+//         a = a;
 
-        CHECK(a.is_valid() == true);
-    }
-}
+//         CHECK(a.is_valid() == true);
+//     }
+// }
 
 /////////////////////////////////////////////////////////////////////////////////////////

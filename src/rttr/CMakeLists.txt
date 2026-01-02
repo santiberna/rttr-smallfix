@@ -85,7 +85,7 @@ endif()
 
 if (BUILD_STATIC)
     add_library(rttr_core_lib STATIC ${UnityBuild} ${SRC_FILES} ${HPP_FILES})
-    add_library(RTTR::Core_Lib ALIAS rttr_core_lib)
+    add_library(RTTR::Core ALIAS rttr_core_lib)
 
     
 

@@ -612,7 +612,7 @@ namespace detail
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     // checks whether the given type T has a less than operator
-    template<typename T, typename = decltype(std::declval<T>() < std::declval<T>() )>
+    template<typename T, typename = decltype(std::less<>{}(std::declval<T>(), std::declval<T>()))>
     std::true_type  supports_less_than_test(const T&);
     std::false_type supports_less_than_test(...);
 
