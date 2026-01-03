@@ -270,6 +270,21 @@ class RTTR_API constructor
         variant invoke_variadic(std::vector<argument> args) const;
 
         /*!
+         * \brief Invokes the constructor of type returned by \ref get_instantiated_type().
+         *        The instance will always be created with emplacement new
+         *        Use this method when you need to instantiate the object at a particular memory location
+         *
+         * \remark The given argument type has to match **exactly** the type of the underling constructor parameter,
+         *         otherwise the constructor cannot be invoked and false will be returned.
+         *         The provided buffer must be the size of the type to be instantiated.
+         *
+         * \see get_parameter_infos()
+         *
+         * \return True if the construction succeeded, false otherwise.
+         */
+        variant emplace_variadic(void* buf, std::vector<argument> args) const;
+
+        /*!
          * \brief Returns true if this constructor is the same like the \p other.
          *
          * \return True if both constructors are equal, otherwise false.

@@ -179,6 +179,13 @@ variant constructor::invoke_variadic(std::vector<argument> args) const
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+variant constructor::emplace_variadic(void* buf, std::vector<argument> args) const
+{
+    return m_wrapper->emplace_variadic(buf, args);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 bool constructor::operator==(const constructor& other) const RTTR_NOEXCEPT
 {
     return (m_wrapper == other.m_wrapper);

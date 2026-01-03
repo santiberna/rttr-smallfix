@@ -77,6 +77,7 @@ class constructor_wrapper<Class_Type, class_ctor, Acc_Level, Policy,
 :   public constructor_wrapper_base, public metadata_handler<Metadata_Count>
 {
     using invoker_class = constructor_invoker<ctor_type, Policy, type_list<Class_Type, Ctor_Args...>, index_sequence_for<Ctor_Args...>>;
+    using emplace_class = constructor_emplace_invoker<ctor_type, type_list<Class_Type, Ctor_Args...>, index_sequence_for<Ctor_Args...>>;
     using instanciated_type = typename invoker_class::return_type;
 
     public:
@@ -165,6 +166,20 @@ class constructor_wrapper<Class_Type, class_ctor, Acc_Level, Policy,
         variant invoke_variadic(std::vector<argument>& arg_list) const
         {
             return invoke_variadic_impl(arg_list, make_index_sequence<sizeof...(Ctor_Args)>());
+        }
+
+        template<std::size_t ...I>
+        static RTTR_INLINE bool emplace_variadic_impl(void* buf, const std::vector<argument>& arg_list, index_sequence<I...>)
+        {
+            if (arg_list.size() == sizeof...(I))
+                return emplace_class::invoke(buf, arg_list[I]...);
+            else
+                return false;
+        }
+
+        bool emplace_variadic(void* buf, std::vector<argument>& arg_list) const
+        {
+            return emplace_variadic_impl(buf, arg_list, make_index_sequence<sizeof...(Ctor_Args)>());
         }
 
         void visit(visitor& visitor, const constructor& ctor) const RTTR_NOEXCEPT
@@ -269,6 +284,7 @@ class constructor_wrapper<Class_Type, class_ctor, Acc_Level, Policy,
 :   public constructor_wrapper_base, public metadata_handler<Metadata_Count>
 {
     using invoker_class = constructor_invoker<ctor_type, Policy, type_list<Class_Type, Ctor_Args...>, index_sequence_for<Ctor_Args...>>;
+    using emplace_class = constructor_emplace_invoker<ctor_type, type_list<Class_Type, Ctor_Args...>, index_sequence_for<Ctor_Args...>>;
     using instanciated_type = typename invoker_class::return_type;
 
     public:
@@ -354,6 +370,20 @@ class constructor_wrapper<Class_Type, class_ctor, Acc_Level, Policy,
         variant invoke_variadic(std::vector<argument>& arg_list) const
         {
             return invoke_variadic_impl(arg_list, make_index_sequence<sizeof...(Ctor_Args)>());
+        }
+
+         template<std::size_t ...I>
+        static RTTR_INLINE bool emplace_variadic_impl(void* buf, const std::vector<argument>& arg_list, index_sequence<I...>)
+        {
+            if (arg_list.size() == sizeof...(I))
+                return emplace_class::invoke(buf, arg_list[I]...);
+            else
+                return false;
+        }
+
+        bool emplace_variadic(void* buf, std::vector<argument>& arg_list) const
+        {
+            return emplace_variadic_impl(buf, arg_list, make_index_sequence<sizeof...(Ctor_Args)>());
         }
 
         void visit(visitor& visitor, const constructor& ctor) const RTTR_NOEXCEPT
