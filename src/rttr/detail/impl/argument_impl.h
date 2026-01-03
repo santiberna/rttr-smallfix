@@ -78,6 +78,15 @@ argument::argument(T& data) RTTR_NOEXCEPT
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
+argument::argument(const void* ptr, rttr::type type) RTTR_NOEXCEPT
+    : m_data(ptr),
+      m_variant(nullptr),
+      m_type(type)
+{
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
 template<typename T>
 RTTR_INLINE argument::ptr_type<T> argument::is_type() const RTTR_NOEXCEPT
 {

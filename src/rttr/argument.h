@@ -87,6 +87,8 @@ public:
     template<typename T, typename Tp = decay_arg_t<T>>
     RTTR_INLINE argument(T& data) RTTR_NOEXCEPT;
 
+    RTTR_INLINE argument(const void* ptr, rttr::type type) RTTR_NOEXCEPT;
+
     RTTR_INLINE argument& operator=(const argument& other) RTTR_NOEXCEPT;
 
     RTTR_INLINE type get_type() const RTTR_NOEXCEPT;
