@@ -32,6 +32,8 @@
 #include "rttr/detail/misc/utility.h"
 #include "rttr/detail/policies/ctor_policies.h"
 
+#include <new>
+
 namespace rttr
 {
 namespace detail
@@ -39,12 +41,29 @@ namespace detail
 
 struct ctor_type { };
 
-struct ctor_func_type { };
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 template<typename Ctor_Type, typename Policy, typename Accessor, typename Arg_Indexer>
 struct constructor_invoker;
+
+template<typename Ctor_Type, typename Accessor, typename Arg_Indexer>
+struct constructor_emplace_invoker;
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+template<typename Class_Type, typename...Ctor_Args, std::size_t... Arg_Count>
+struct constructor_emplace_invoker<ctor_type, type_list<Class_Type, Ctor_Args...>, index_sequence<Arg_Count...>>
+{
+    template<typename... TArgs>
+    static RTTR_INLINE bool invoke(void* buf, TArgs&&...args)
+    {
+        if (check_all_true(args. template is_type<Ctor_Args>()...)) {
+            new (buf) Class_Type(args. template get_value<Ctor_Args>()...);
+            return true;
+        }
+        return false;
+    }
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
